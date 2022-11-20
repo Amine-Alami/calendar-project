@@ -1,0 +1,251 @@
+/* .calendar-container,
+.calendar,
+.calendar-header,
+div {
+    padding: 0;
+    margin: 0;
+}
+
+.calendar-container {
+}
+
+
+.calendar {
+    background-color: white;
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.calendar-header {
+    background-color: rgb(211, 84, 0);
+    border-radius: 12px 12px 0px 0px;
+    color: white;
+    font-size: 2em;
+    text-align: center;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+}
+
+.weekdays, .week {
+    display: inline-flex;
+    width: 100%;
+}
+
+.prev, .next {
+    cursor: pointer;
+    flex: 2;
+}
+
+.calendar-header div {
+    border-spacing: 0;
+    padding-left: 5px;
+    flex: 10;
+}
+
+.day,
+.empty-slot,
+.week-day {
+    text-align: center;
+    height: 40px;
+}
+
+.week div {
+    flex: 2;
+}
+
+.week-day {
+    font-size: 0.8em;
+    flex: auto;
+}
+
+.day {
+    font-size: 0.8em;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+}
+
+.current-day {
+    background-color: #4285f4;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    border-radius: 2%;
+    color: white;
+}
+
+.selected-day {
+    background-color:yellow;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    border-radius: 2%;
+    color: black;
+}
+
+.month-popup {
+    position: absolute;
+    padding: 5px;
+    background: white;
+    border: 2px solid skyblue;
+}
+
+.month-popup div {
+    padding: 0.3em;
+}
+
+.nav-month {
+    position: absolute;
+    top: 0.6em;
+    font-size: 0.6em;
+    right:3px;
+}
+
+
+
+.editor-year {
+    max-width: 3.6em;
+}
+
+.label-month,
+.label-year {
+    font-size: 0.6em;
+}
+
+.label-month {
+    cursor: pointer;
+} */
+
+.container {
+  padding: 50px;
+}
+
+.clearfix::after, .calendar ol::after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+  
+  .calendar {
+    border-radius: 10px;
+    max-width: 826px;
+
+    .calendar-header {
+  
+      .month-container, .year-container {
+        font-size: 2rem;
+        font-weight: bold;
+        display: flex;
+        width: 100%;
+
+        i {
+          flex: 1;
+          cursor: pointer;
+          padding: 10px;
+        }
+
+        span, div {
+          flex: 10;
+
+          input {
+            max-width: 150px;
+            text-align: center;
+          }
+        }
+
+        .month-popup .month{
+          cursor: pointer;
+        }
+
+        .label-month, .label-year {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .events {
+      padding: 30px 10px;
+
+      .skylight-dialog{
+
+        border-radius: 15px !important;
+
+        .event-modal {
+  
+          .event-header {
+            display: flex;
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+          }
+
+          .event-body {
+            padding: 1rem;
+
+            > * {
+              margin: 15px 0;
+            }
+          }
+
+          .event-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: .75rem;
+            border-top: 1px solid #dee2e6;
+
+            > * {
+              margin: .25rem;
+            }
+          }
+        }
+      }
+
+    }
+
+    .calendar-body {
+
+      .day-names {
+        border-bottom: 1px solid #eee;
+        margin-bottom: 1em;
+        display: flex;
+        
+        div {
+          margin-bottom: 0.5em;
+          flex: auto;
+          font-weight: bold;
+          max-width: 112px;
+        }
+      }
+
+      .calendar-content {
+        .week {
+          display: flex;
+
+          div {
+            width: 112px;
+            max-width: 112px;
+            height: 6rem;
+            cursor: pointer;
+
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.144);
+            }
+
+            &.current-day span {
+              color: crimson;
+              font-weight: bold;
+            }
+
+            &.selected-day {
+              background-color: rgba(0, 0, 0, 0.144);
+            }
+          }
+        }
+      }
+    }
+  }
