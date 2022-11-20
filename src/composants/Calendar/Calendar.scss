@@ -170,10 +170,39 @@ div {
     }
 
     .events {
-      padding: 30px 10px;
+      padding: 20px 10px;
+
+      .event {
+        display: flex;
+        width: 50%;
+        margin: 15px auto;
+        word-break: break-all;
+
+        .event-date {
+          flex: 2;
+          display: grid;
+          font-family: monospace;
+          font-weight: bold;
+          background-color: #eee;
+          font-size: xx-large;
+          span {
+            max-height: 100px;
+          }
+        }
+        .event-content {
+          flex: 8;
+          padding: 10px;
+        }
+
+        .close {
+          margin-right: 5px;
+          span {
+            color: red;
+          }
+        }
+      }
 
       .skylight-dialog{
-
         border-radius: 15px !important;
 
         .event-modal {

@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import SkyLight from 'react-skylight';
-// import uuid from 'uuid';
 import EventList from './EventList';
+import EventModal from './EventModal';
 import './Calendar.scss';
 
 /**
@@ -12,21 +12,20 @@ import './Calendar.scss';
  */
 
 export default class Calendar extends React.Component {
-    state = {
-        dateContext: moment(),
-        today: moment(),
-        showMonthPopup: false,
-        showYearPopup: false,
-        selectedDay: null,
-        events: []
-    }
 
     constructor(props){
         super(props);
-        this.state.events = [
-            {title: 'event1', comment: 'comment1', date: new Date()},
-            {title: 'event2', comment: 'comment2', date: new Date()}
-        ]
+
+        this.state = {
+            dateContext: moment(),
+            showMonthPopup: false,
+            showYearPopup: false,
+            selectedDay: null,
+            events: [/* 
+                {title: 'event1', comment: 'comment1', date: 'date 1'},
+                {title: 'event2', comment: 'comment2', date: 'date 2'}
+             */]
+        }
     }
 
     weekdays = moment.weekdays(true); //["Sunday", "Monday", "Tuesday", "Wednessday", "Thursday", "Friday", "Saturday"]
@@ -219,44 +218,11 @@ export default class Calendar extends React.Component {
         this.setState({
             selectedDay: day
         }, () => {
-            console.log("SELECTED DATE: ", this.selectedDate());
             this.simpleDialog.show();
         });
 
         // this.props.onDayClick && this.props.onDayClick(e, day);
     }
-
-    saveEvent() {
-        // e.preventDefault();
-        // const form = event.target;
-        // const data = new FormData(form);
-        // console.log(data);
-        // const newEvent = {
-        //   id: uuid(),
-        //   title: this.state.name,
-        //   comment: this.state.img,
-        //   date: 
-        // }
-    }
-
-    EventModal = () => {
-        return (
-            <form className="event-modal" onSubmit={this.saveEvent}>
-                <div className="event-header">
-                    <h4 className="modal-title">Ajouter un évenement</h4>
-                </div>
-                <div className="event-body">
-                    <input name='title' type="text" className="form-control" placeholder="Titre"/>
-                    <textarea name='comment' type="text" rows="5" className="form-control" placeholder="Commentaire"/>
-                    <input name='date' type="date" className="form-control" value={this.selectedDate()}/>
-                </div>
-                <div className="event-footer">
-                    <button type="button" className="btn btn-success" onClick={this.saveEvent()}>Enregistrer</button>
-                </div>
-            </form>
-        );
-    }
-
     
 
     render() {
@@ -289,11 +255,10 @@ export default class Calendar extends React.Component {
             );
         }
 
-        // 
+        // Map all rows
         var totalSlots = [...blanks, ...daysInMonth];
         let rows = [];
         let cells = [];
-
         totalSlots.forEach((row, i) => {
             if ((i % 7) !== 0) {
                 cells.push(row);
@@ -309,6 +274,7 @@ export default class Calendar extends React.Component {
             }
         });
 
+        // Map each week
         let weeksContent = rows.map((d, i) => {
             return (
                 <div className="week" key={i*100}>
@@ -317,11 +283,16 @@ export default class Calendar extends React.Component {
             );
         })
 
+        const setEvents = (data) => {
+            this.setState({events: data});
+            this.simpleDialog.hide();
+        }
+
         return (
             <div className="container" style={this.style}>
                 <div className="calendar shadow p-3">
                     <div className="calendar-header">
-                
+                        {/* YEAR */}
                         <div className="year-container mb-0">
                             <i className="prev fa fa-fw fa-chevron-left"
                                 onClick={(e)=> {this.prevYear()}}>
@@ -333,7 +304,8 @@ export default class Calendar extends React.Component {
                                 onClick={(e)=> {this.nextYear()}}>
                             </i>
                         </div>
-                        
+
+                        {/* MONTH */}
                         <div className="month-container mb-0">
                             <i className="prev fa fa-fw fa-chevron-left"
                                 onClick={(e)=> {this.prevMonth()}}>
@@ -345,16 +317,18 @@ export default class Calendar extends React.Component {
                                 onClick={(e)=> {this.nextMonth()}}>
                             </i>
                         </div>
-                        
                     </div>
-                    <div className="events mb-3 mt-3">
 
-                        <EventList events={this.state.events}/>
+                    {/* EVENTS */}
+                    <div className="events mb-3 mt-3">
+                        <EventList events={this.state.events} date={this.state.dateContext}/>
 
                         <SkyLight hideOnOverlayClicked ref={ref => this.simpleDialog = ref}>
-                            <this.EventModal/>
+                            <EventModal date={this.selectedDate()} props={ setEvents }/> 
                         </SkyLight>
                     </div>
+
+                    {/* CALENDAR */}
                     <div className="calendar-body">
                         <div className="day-names ">
                             {weekdays}
