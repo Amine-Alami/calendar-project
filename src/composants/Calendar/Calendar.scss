@@ -43,18 +43,37 @@
 
         .label-month, .label-year {
           cursor: pointer;
+
+          .month-popup {
+            font-size: medium;
+            width: 100px;
+            margin: auto;
+
+            div:hover {
+              background: #dee2e6;
+            }
+          }
         }
       }
     }
 
     .events {
-      padding: 20px 10px;
+      padding-bottom: 10px;
+
+      .no-event{
+        font-style: italic;
+        font-family: auto;
+      }
 
       .event {
         display: flex;
         width: 50%;
         margin: 15px auto;
         word-break: break-all;
+
+        .today-event {
+          background-color: #91ff006e;
+        }
 
         .event-date {
           flex: 2;
