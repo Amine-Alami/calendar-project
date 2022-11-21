@@ -11,6 +11,8 @@ import './Calendar.scss';
  *      
  */
 
+const LOCAL_STORAGE_KEY = "events";
+
 export default class Calendar extends React.Component {
 
     constructor(props){
@@ -21,10 +23,11 @@ export default class Calendar extends React.Component {
             showMonthPopup: false,
             showYearPopup: false,
             selectedDay: null,
-            events: [/* 
-                {title: 'event1', comment: 'comment1', date: 'date 1'},
-                {title: 'event2', comment: 'comment2', date: 'date 2'}
-             */]
+            events: []
+        }
+        const events = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+        if (events) {
+            this.state.events = events;
         }
     }
 
@@ -52,7 +55,13 @@ export default class Calendar extends React.Component {
         return this.state.dateContext.format("DD");
     }
 
-
+    // check if we are in the current year and month
+    currentYearAndMonth = () => {
+        if(moment().format("MM") === this.state.dateContext.format("MM")  &&  moment().format("YYYY") === this.state.dateContext.format("YYYY")) {
+            return true;
+        }
+        return false;
+    }
 
     // return current date
     selectedDate = () => {
@@ -102,7 +111,6 @@ export default class Calendar extends React.Component {
         this.setState({
             dateContext: dateContext
         });
-        this.props.onPrevYear && this.props.onPrevYear();
     }
 
     nextYear = () => {
@@ -111,7 +119,6 @@ export default class Calendar extends React.Component {
         this.setState({
             dateContext: dateContext
         });
-        this.props.onNextYear && this.props.onNextYear();
     }
 
     setYear = (year) => {
@@ -162,7 +169,6 @@ export default class Calendar extends React.Component {
         this.setState({
             dateContext: dateContext
         });
-        this.props.onPrevMonth && this.props.onPrevMonth();
     }
 
     nextMonth = () => {
@@ -171,7 +177,6 @@ export default class Calendar extends React.Component {
         this.setState({
             dateContext: dateContext
         });
-        this.props.onNextMonth && this.props.onNextMonth();
     }
     
     setMonth = (month) => {
@@ -213,19 +218,26 @@ export default class Calendar extends React.Component {
     }
     /* ****************************** ********* ******************************* */
 
-
     onDayClick = (e, day) => {
         this.setState({
             selectedDay: day
         }, () => {
+            this.removeSelected();
+            e.target.classList.add('selected-day');
             this.simpleDialog.show();
         });
-
-        // this.props.onDayClick && this.props.onDayClick(e, day);
     }
-    
+
+    removeSelected = () => {
+        let days = document.getElementsByClassName('selected-day');
+        for (let i = 0; i < days.length; i++) {
+            days[i].classList.remove('selected-day');
+        }
+    }
 
     render() {
+        this.removeSelected();
+
         // Map the weekdays
         let weekdays = this.weekdaysShort.map((day) => {
             return (
@@ -246,10 +258,11 @@ export default class Calendar extends React.Component {
         // Map days
         let daysInMonth = [];
         for (let d = 1; d <= this.daysInMonth(); d++) {
-            let className = (d == this.currentDay() ? "day current-day": "day");
-            let selectedClass = (d == this.state.selectedDay ? " selected-day " : "")
+            // let className = (d == this.currentDay() ? "day current-day": "day");
+            let className = (d == this.currentDay() && this.currentYearAndMonth() ? "day current-day": "day");
+            // let selectedClass = (d == this.state.selectedDay ? " selected-day " : "")
             daysInMonth.push(
-                <div key={d} className={className + selectedClass} onClick={(e)=>{this.onDayClick(e, d)}}>
+                <div key={d} className={ className } onClick={(e)=>{ this.onDayClick(e, d) }}>
                     <span>{d}</span>
                 </div>
             );
@@ -283,9 +296,14 @@ export default class Calendar extends React.Component {
             );
         })
 
+        const updateLocalStorage = (data) => {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+        }
+
         const setEvents = (data) => {
             this.setState({events: data});
             this.simpleDialog.hide();
+            updateLocalStorage(data);
         }
 
         return (
@@ -321,10 +339,10 @@ export default class Calendar extends React.Component {
 
                     {/* EVENTS */}
                     <div className="events mb-3 mt-3">
-                        <EventList events={this.state.events} date={this.state.dateContext}/>
+                        <EventList events={this.state.events} date={this.state.dateContext} props={ setEvents }/>
 
                         <SkyLight hideOnOverlayClicked ref={ref => this.simpleDialog = ref}>
-                            <EventModal date={this.selectedDate()} props={ setEvents }/> 
+                            <EventModal date={this.selectedDate()} events={this.state.events} props={ setEvents }/> 
                         </SkyLight>
                     </div>
 
