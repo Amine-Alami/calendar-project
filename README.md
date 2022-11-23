@@ -30,6 +30,10 @@ npm start
 
 ## Preview
 
+
+[Demo](https://amine-alami.github.io/calendar-project)
+
+
 ![](https://imgur.com/W50ipNJ.jpg)
 
 ![](https://imgur.com/Rb4et0O.jpg)
