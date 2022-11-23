@@ -5,11 +5,11 @@ You can also add and delete events.
 
 [Demo](https://amine-alami.github.io/calendar-project)
 
-![](https://imgur.com/W50ipNJ)
+![](https://imgur.com/W50ipNJ.jpg)
 
-![](https://imgur.com/Rb4et0O)
+![](https://imgur.com/Rb4et0O.jpg)
 
-![](https://imgur.com/J543afr)
+![](https://imgur.com/J543afr.jpg)
 
 ## Usage
 
