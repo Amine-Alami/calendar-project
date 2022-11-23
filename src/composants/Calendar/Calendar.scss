@@ -13,8 +13,15 @@
   .calendar {
     border-radius: 10px;
     max-width: 826px;
+    margin: auto;
 
     .calendar-header {
+      max-width: 500px;
+      margin: auto;
+
+      .fa:before {
+        filter: drop-shadow(4px 4px 4px black);
+      }
   
       .month-container, .year-container {
         font-size: 2rem;
@@ -72,7 +79,7 @@
         word-break: break-all;
 
         .today-event {
-          background-color: #91ff006e;
+          background-color: #91ff006e !important;
         }
 
         .event-date {

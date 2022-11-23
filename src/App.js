@@ -5,6 +5,7 @@ import Calendar from "./composants/Calendar/Calendar";
 
 class App extends Component {
   render() {
+    console.warn = () => {};
     return (
       <div className="App">
         <Calendar />     

@@ -5,11 +5,6 @@ import EventList from './EventList';
 import EventModal from './EventModal';
 import './Calendar.scss';
 
-/**
- * TODO:
- *      translate months and days
- *      
- */
 
 const LOCAL_STORAGE_KEY = "events";
 
@@ -21,18 +16,17 @@ export default class Calendar extends React.Component {
         this.state = {
             dateContext: moment(),
             showMonthPopup: false,
-            showYearPopup: false,
             selectedDay: null,
             events: []
         }
+        // Load events from local storage if exists
         const events = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
         if (events) {
             this.state.events = events;
         }
     }
 
-    weekdays = moment.weekdays(true); //["Sunday", "Monday", "Tuesday", "Wednessday", "Thursday", "Friday", "Saturday"]
-    weekdaysShort = moment.weekdaysShort(); // ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    weekdaysShort = moment.weekdaysShort();
     months = moment.months(true);
 
     // return selected month formated
@@ -72,7 +66,7 @@ export default class Calendar extends React.Component {
     // return number of empty days before start of the month
     firstDayOfMonth = () => {
         let dateContext = this.state.dateContext;
-        let firstDay = moment(dateContext).startOf('month').format('d'); // Day of week 0...1..5...6
+        let firstDay = moment(dateContext).startOf('month').format('d');
         return firstDay;
     }
     
@@ -153,13 +147,15 @@ export default class Calendar extends React.Component {
 
     MonthNav = () => {
         return (
-            <span className="label-month"
-                onClick={(e)=> {this.onChangeMonth(e, this.month())}}>
-                {this.month()}
-                {this.state.showMonthPopup &&
-                    <this.SelectList data={this.months} />
-                }
-            </span>
+            <div>
+                <span className="label-month"
+                    onClick={(e)=> {this.onChangeMonth(e, this.month())}}>
+                    {this.month()}
+                    {this.state.showMonthPopup &&
+                        <this.SelectList data={this.months} />
+                    }
+                </span>
+            </div>
         );
     }
     
@@ -315,9 +311,7 @@ export default class Calendar extends React.Component {
                             <i className="prev fa fa-fw fa-chevron-left"
                                 onClick={(e)=> {this.prevYear()}}>
                             </i> 
-                            <div>
-                                <this.YearNav/>
-                            </div>
+                            <this.YearNav/>
                             <i className="next fa fa-fw fa-chevron-right"
                                 onClick={(e)=> {this.nextYear()}}>
                             </i>
@@ -328,9 +322,7 @@ export default class Calendar extends React.Component {
                             <i className="prev fa fa-fw fa-chevron-left"
                                 onClick={(e)=> {this.prevMonth()}}>
                             </i> 
-                            <div>
-                                <this.MonthNav/>
-                            </div>
+                            <this.MonthNav/>
                             <i className="next fa fa-fw fa-chevron-right"
                                 onClick={(e)=> {this.nextMonth()}}>
                             </i>

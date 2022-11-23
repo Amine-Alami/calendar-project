@@ -18,8 +18,8 @@ export default function EventList({ events, date, props }) {
         .map((e, i) => {
             return(
                 <div key={e.id} className="shadow event" >
-                    <div className="event-date" >
-                        <div className={ moment(e.date).isSame(moment(date).format("YYYY-MM-DD")) ? 'today-event' : ''} >
+                    <div className={ moment(e.date).isSame(moment(date).format("YYYY-MM-DD")) ? 'event-date today-event' : 'event-date'} >
+                        <div>
                             <span className="day">{ moment(e.date).format("DD") }</span>
                             <span className="month">{ moment(e.date).format("MMM") }</span>
                         </div>
