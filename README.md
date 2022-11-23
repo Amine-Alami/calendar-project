@@ -1,15 +1,9 @@
 # React calendar project
 
 A simple calendar project made with React using [moment](https://momentjs.com/) and [skylight](http://marcio.github.io/react-skylight/).
+
 You can also add and delete events.
 
-[Demo](https://amine-alami.github.io/calendar-project)
-
-![](https://imgur.com/W50ipNJ.jpg)
-
-![](https://imgur.com/Rb4et0O.jpg)
-
-![](https://imgur.com/J543afr.jpg)
 
 ## Usage
 
@@ -33,4 +27,13 @@ And finally run
 ```bash
 npm start
 ```
+
+## Preview
+
+![](https://imgur.com/W50ipNJ.jpg)
+
+![](https://imgur.com/Rb4et0O.jpg)
+
+![](https://imgur.com/J543afr.jpg)
+
 
